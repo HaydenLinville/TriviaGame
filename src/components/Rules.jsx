@@ -12,7 +12,7 @@ function Rules(props){
         <li>You have 1 minute per question</li>
         <li>You have 10 questions</li>
     </ol>
-    <Buttons clicked={props.clicked} text="Press Start"></Buttons>
+    <Buttons clicked={props.clicked} color={'#1976d2'} hcolor={'#115293'}text="Press Start"></Buttons>
 </div>
 );
 }
