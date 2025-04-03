@@ -2,19 +2,23 @@ import React from "react";
 import Questions from "./Questions";
 import Answers from "./Answers";
 
-function TriviaBox(props){
-return (
-<div class="trivia-box">
-    <Questions id={props.id} question={props.question} />
-    <div  class="answers">
-    {props.answers.map((a)=>(
-        <Answers playerChoice={props.playerChoice} currectAnswer={props.currectAnswer} key={a.index} id={a.index} answer={a}/>
-    ))}
+function TriviaBox(props) {
+  return (
+    <div class="trivia-box">
+      <Questions id={props.id} question={props.question} />
+      <div class="answers">
+        {props.answers.map((a) => (
+          <Answers
+            playerChoice={props.playerChoice}
+            currectAnswer={props.currectAnswer}
+            key={a.index}
+            id={a.index}
+            answer={a}
+          />
+        ))}
+      </div>
     </div>
-    
-</div>
-);
+  );
 }
-
 
 export default TriviaBox;
