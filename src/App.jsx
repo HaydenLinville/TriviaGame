@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Rules from "./components/Rules";
@@ -11,6 +11,7 @@ import {
   updateHeartsArray,
   resetQuestions,
 } from "./runGame";
+import Timer from "./components/Timer";
 
 function App() {
   const [hearts, setHearts] = useState(startHearts);
@@ -21,8 +22,27 @@ function App() {
   const [answers, setAnswers] = useState([]);
   const [questionObj, setQuestionObj] = useState(startingQueObj);
   const [currentAnswer, setCurrentAnswer] = useState();
+  const [counter, setCounter] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(100);
+  const firstStart = useRef(true);
+  const tick = useRef();
 
   let { question, id } = questionObj;
+
+  useEffect(() => {
+    if (firstStart.current) {
+      firstStart.current = !firstStart.current;
+      return;
+    }
+    if (gameOn) {
+      tick.current =
+        counter > 0
+          ? setInterval(() => setCounter(counter - 1), 1000)
+          : lostRound();
+    } else clearInterval(tick.current);
+
+    return () => clearInterval(tick.current);
+  }, [counter, gameOn]);
 
   const startGame = () => {
     var newGameOn = true;
@@ -41,6 +61,7 @@ function App() {
       handleTitle(level, newGameOn, true);
       setGameOn(newGameOn);
     } else {
+      setCounter(30);
       setLevel((l) => l + 1);
       handleTitle(level, true, false);
       var queObj = getQuestionObj();
@@ -66,16 +87,20 @@ function App() {
     if (playerAnswer === cAnswer && gameOn) {
       nextRound(level);
     } else if (gameOn) {
-      var newHeartCount = heartCount - 1;
-      var newHearts = updateHeartsArray(newHeartCount, hearts);
-      setHearts(newHearts);
-      setHeartCount(newHeartCount);
-      if (newHeartCount === 0) {
-        var newGameOn = false;
-        setGameOn(newGameOn);
-        handleTitle(level, newGameOn, false);
-      } else nextRound(level);
+      lostRound();
     }
+  };
+
+  const lostRound = () => {
+    var newHeartCount = heartCount - 1;
+    var newHearts = updateHeartsArray(newHeartCount, hearts);
+    setHearts(newHearts);
+    setHeartCount(newHeartCount);
+    if (newHeartCount === 0) {
+      var newGameOn = false;
+      setGameOn(newGameOn);
+      handleTitle(level, newGameOn, false);
+    } else nextRound(level);
   };
 
   return (
@@ -96,6 +121,7 @@ function App() {
           ))}
         </div>
       </div>
+      <Timer countD={counter}></Timer>
     </div>
   );
 }

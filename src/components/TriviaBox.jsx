@@ -1,6 +1,7 @@
 import React from "react";
 import Questions from "./Questions";
 import Answers from "./Answers";
+import Timer from "./Timer";
 
 function TriviaBox(props) {
   return (
