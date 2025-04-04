@@ -32,7 +32,7 @@ function getRandomAnd(array) {
 function updateHeartsArray(heartCounter, hearts) {
   const newHearts = hearts.map((h, i) => {
     if (i === heartCounter) {
-      h = { color: "black" };
+      h = { color: "#263238" };
       return h;
     } else return h;
   });

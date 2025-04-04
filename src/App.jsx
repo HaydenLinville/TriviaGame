@@ -24,10 +24,13 @@ function App() {
   const [currentAnswer, setCurrentAnswer] = useState();
   const [counter, setCounter] = useState(30);
   const [timeLeft, setTimeLeft] = useState(100);
+  const [countDownColor, setCountDownColor] = useState('#2196f3')
   const firstStart = useRef(true);
   const tick = useRef();
-
   let { question, id } = questionObj;
+
+  const colorOpt = ['#2196f3', '#ffeb3b', '#f44336'];
+  const colorValues =[30, 15, 5];
 
   useEffect(() => {
     if (firstStart.current) {
@@ -35,14 +38,33 @@ function App() {
       return;
     }
     if (gameOn) {
-      tick.current =
-        counter > 0
-          ? setInterval(() => setCounter(counter - 1), 1000)
-          : lostRound();
+      if (counter > 0) {
+        tick.current = setInterval(() => {
+          setCounter((prevCounter) => {
+            const newCounter = prevCounter - 1;
+            setTimeLeft((newCounter / 30) * 100);
+            return newCounter;
+          });
+        }, 1000);
+      } else {
+        lostRound();
+        setTimeLeft(100);
+      }
     } else clearInterval(tick.current);
 
     return () => clearInterval(tick.current);
   }, [counter, gameOn]);
+
+useEffect(() => {
+  for (let i=0; i< colorValues.length; i++){
+    const item = colorValues[i];
+    if(counter === item){
+      setCountDownColor(colorOpt[i]);
+      break;
+    }
+  }
+})
+
 
   const startGame = () => {
     var newGameOn = true;
@@ -62,6 +84,7 @@ function App() {
       setGameOn(newGameOn);
     } else {
       setCounter(30);
+      setTimeLeft(100);
       setLevel((l) => l + 1);
       handleTitle(level, true, false);
       var queObj = getQuestionObj();
@@ -113,6 +136,7 @@ function App() {
           answers={answers}
           currectAnswer={currentAnswer}
           question={question}
+          buttonColor={countDownColor}
           playerChoice={checkPlayer}
         />
         <div class="hearts">
@@ -120,8 +144,8 @@ function App() {
             <Hearts key={h.id} id={h.id} color={h.color} />
           ))}
         </div>
+      { gameOn && <Timer color={countDownColor} percent={timeLeft} countD={counter}></Timer>}
       </div>
-      <Timer countD={counter}></Timer>
     </div>
   );
 }

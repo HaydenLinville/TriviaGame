@@ -13,18 +13,16 @@ function Answers(props) {
         width: 270,
         height: 150,
         borderRadius: 1,
-        bgcolor: "#6d4c41",
-        "&:hover": {
-          bgcolor: "#5d4037",
-        },
+        bgcolor: "#616161",
+        
       }}
     >
       <Buttons
         clicked={props.playerChoice}
         currectAnswer={props.currectAnswer}
         text={props.answer}
-        color={props.color}
-        hcolor={props.hcolor}
+        color={"#455a64"}
+        hcolor={"#37474f"}
       ></Buttons>
     </Box>
   );

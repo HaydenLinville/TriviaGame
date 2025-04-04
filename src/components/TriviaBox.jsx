@@ -15,6 +15,7 @@ function TriviaBox(props) {
             key={a.index}
             id={a.index}
             answer={a}
+            
           />
         ))}
       </div>

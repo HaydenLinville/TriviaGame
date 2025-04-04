@@ -5,15 +5,15 @@ function Rules(props) {
   return (
     <div class="starting-screen">
       <h2>Rules:</h2>
-      <ol>
-        <li>You have 3 lives</li>
-        <li>You have 30 seconds per question</li>
-        <li>You have 10 questions</li>
-      </ol>
+      <ul>
+        <li>3 lives</li>
+        <li>30 seconds per question</li>
+        <li>10 questions</li>
+      </ul>
       <Buttons
         clicked={props.clicked}
-        color={"#1976d2"}
-        hcolor={"#115293"}
+        color={"#455a64"}
+        hcolor={"#37474f"}
         text="Press Start"
       ></Buttons>
     </div>

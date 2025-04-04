@@ -80,6 +80,6 @@ var startingQueObj ={
     id: 0
 }
 
-var startHearts = [{id: 1, color:'red'}, {id: 2,  color:'red'}, {id:3, color:'red'}];
+var startHearts = [{id: 1, color:'#607d8b'}, {id: 2,  color:'#607d8b'}, {id:3, color:'#607d8b'}];
 
 export  {questionArray, startHearts, startingQueObj};
